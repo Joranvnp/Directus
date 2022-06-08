@@ -11406,11 +11406,11 @@ p {
   }
 }
 header.masthead { 
-  padding-top: 10.5rem;
+  padding-top: 4rem;
   padding-bottom: 6rem;
   text-align: center;
-  color: #fff;
-  background-image: url("../assets/img/header-bg.jpg");
+  color: grey;
+  /*background-image: url("../assets/img/header-bg.jpg");*/
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-position: center center;
@@ -11433,8 +11433,8 @@ header.masthead .masthead-heading {
 
 @media (min-width: 768px) {
   header.masthead {
-    padding-top: 17rem;
-    padding-bottom: 12.5rem;
+    padding-top: 0rem;
+    /* padding-bottom: 12.5rem; */
   }
   header.masthead .masthead-subheading {
     font-size: 2.25rem;
@@ -11780,28 +11780,11 @@ section#contact form#contactForm :-ms-input-placeholder {
 
 /* Header Background Scroll */
 /* Slideshow container */
-.slideshow-container {
+/* .slideshow-container {
   max-width: 1000px;
   position: relative;
   margin: auto;
-  /* top: 90%; */
-}
-
-/* .container-slide {
-  max-width: 1000px;
-  position: relative;
-  margin: auto;
-  cursor: pointer;
-  top: 50%;
-  width: auto;
-  padding: 16px;
-  margin-top: -22px;
-  color: white;
-  font-weight: bold;
-  font-size: 18px;
-  transition: 0.6s ease;
-  border-radius: 0 3px 3px 0;
-  user-select: none;
+  /* top: 90%; 
 } */
 
 /* Next & previous buttons */
@@ -11887,4 +11870,14 @@ section#contact form#contactForm :-ms-input-placeholder {
 /* On smaller screens, decrease text size */
 @media only screen and (max-width: 300px) {
   .prev, .next,.text {font-size: 11px}
+}
+
+.item img {
+  position: absolute;
+  object-fit: cover;
+  width: 100%;
+  top: 0;
+  left: 0;
+  min-height: 572px;
+  background: #087990;
 }
