@@ -18,39 +18,23 @@
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     </head>
     <body id="page-top">
-        <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-            <div class="container">
-                <a class="navbar-brand" href="#page-top"><img src="assets/img/navbar-logo.svg" alt="..." /></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    Menu
-                    <i class="fas fa-bars ms-1"></i>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
         <script>
-            const options = {
-                method: 'GET',
-                url: 'http://admin.ham05.com:8055/items/homepage',
-                headers: {'Content-Type': 'application/json'}
-                };
-                axios.request(options).then(function (response) {
-                console.log(response.data);
-                document.getElementById("titre").innerHTML = (response.data["data"]["Titre"]);
-                document.getElementById("description").innerHTML = (response.data["data"]["Description"]);
-                }).catch(function (error) {
-                console.error(error);
-            });
+            async function makeGetHomepage() {
+            let response = await axios
+                .get("http://admin.ham05.com:8055/items/homepage")
+                .then((response) => {
+                    console.log(response.data);
+                    document.getElementById("titre").innerHTML = (response.data["data"]["Titre"]);
+                    document.getElementById("description").innerHTML = (response.data["data"]["Description"]);
+
+                    //Logo
+                    var dataLogo = (response.data["data"]["Logo"]);
+                    console.log("donnée image logo: "+dataLogo);
+                    document.getElementById("navbar-logo").setAttribute("src", "http://admin.ham05.com:8055/assets/"+dataLogo);
+                    document.getElementById("navbar-logo").setAttribute("alt", "http://admin.ham05.com:8055/assets/"+dataLogo);
+                })
+            }
+            makeGetHomepage();
 
             var nb_slide = 0;
             async function makeGetImage() {
@@ -58,13 +42,13 @@
                 .get("http://admin.ham05.com:8055/items/homepage_files")
                 .then((response) => {
                     var slideImgLength = (response.data["data"]).length;
-                    console.log(slideImgLength);
+                    console.log("nombre d'image dans le slide: "+slideImgLength);
 
                     while (nb_slide <= slideImgLength)
                     {
                         // Données JSON de chaque image
                         var dataImg = (response.data["data"][nb_slide]["directus_files_id"]);
-                        console.log(dataImg);
+                        console.log("donnée image slider: "+dataImg);
                         nb_slide = nb_slide+1;
 
                         // Création des Sliders
@@ -82,7 +66,7 @@
                         // Ajout des boutons
                         document.getElementById("butSlide").appendChild(butSlide);
 
-                        // Créattion des images pour chaque slider
+                        // Création des images pour chaque slider
                         var imgSlide = document.createElement('img');
                         imgSlide.setAttribute("class","d-block w-100");
                         imgSlide.src = "http://admin.ham05.com:8055/assets/"+dataImg;
@@ -104,11 +88,116 @@
             }
             makeGetImage();
 
+            var nb_marque = 0;
+            async function makeGetMarque() {
+            let response = await axios
+                .get("http://admin.ham05.com:8055/items/Marques")
+                .then((response) => {
+                    var marqueImgLength = (response.data["data"]).length;
+                    console.log(marqueImgLength);
+
+                    while (nb_marque <= marqueImgLength)
+                    {
+                        var dataMarque = (response.data["data"][nb_marque]["Photo"]);
+                        console.log(dataMarque);
+
+                        //Bloc parent pour les marques
+                        var row = document.getElementById("row");
+
+                        //Création marque bloc
+                        var imgMarqueBloc = document.createElement('div');
+                        imgMarqueBloc.setAttribute("class", "col-lg-4 col-sm-6 mb-4");
+                        row.appendChild(imgMarqueBloc);
+                        
+                        var marqueBloc = document.createElement('div');
+                        marqueBloc.setAttribute("class","portfolio-item");
+                        imgMarqueBloc.appendChild(marqueBloc);
+
+                        var marqueBlocLink = document.createElement('a');
+                        marqueBlocLink.setAttribute("class", "portfolio-link");
+                        marqueBlocLink.setAttribute("data-bs-toggle", "modal");
+                        marqueBlocLink.setAttribute("href", "#portfolioModal"+(nb_marque +1));
+                        marqueBloc.appendChild(marqueBlocLink);
+
+                        // Marque hover
+                        var marqueHover = document.createElement('div');
+                        marqueHover.setAttribute("class", "portfolio-hover");
+                        marqueBlocLink.appendChild(marqueHover);
+
+                        var marqueHoverContent = document.createElement('div');
+                        marqueHoverContent.setAttribute("class", "portfolio-hover-content");
+                        marqueHover.appendChild(marqueHoverContent);
+
+                        var marqueHoverContentI = document.createElement('i');
+                        marqueHoverContentI.setAttribute("class", "fas fa-plus fa-3x");
+                        marqueHoverContent.appendChild(marqueHoverContentI);
+
+                        // Marque image dans les blocs
+                        var imgMarque = document.createElement("img");
+                        imgMarque.setAttribute("src", "http://admin.ham05.com:8055/assets/"+dataMarque);
+                        imgMarque.setAttribute("class", "img-fluid");
+                        marqueBlocLink.appendChild(imgMarque);
+
+                        // Marque caption text
+                        var marqueBlocCaption = document.createElement('div');
+                        marqueBlocCaption.setAttribute("class", "portfolio-caption");
+                        marqueBloc.appendChild(marqueBlocCaption);
+
+                        var marqueBlocCaptionHeading = document.createElement('div');
+                        marqueBlocCaptionHeading.setAttribute("class", "portfolio-caption-heading");
+                        marqueBlocCaptionHeading.innerHTML = (response.data["data"][nb_marque]["Titre"]);
+                        var marqueBlocCaptionSubheading = document.createElement('div');
+                        marqueBlocCaptionSubheading.setAttribute("class", "portfolio-caption-subheading");
+                        marqueBlocCaptionSubheading.innerHTML = (response.data["data"][nb_marque]["Descriptif"]);
+
+                        marqueBlocCaption.appendChild(marqueBlocCaptionHeading);
+                        marqueBlocCaption.appendChild(marqueBlocCaptionSubheading);
+
+                        if (nb_marque > 3)
+                        {
+                            imgMarqueBloc.setAttribute("class", "col-lg-4 col-sm-6 mb-4 mb-lg-0");
+                        }
+
+                        if(nb_marque >= marqueImgLength)
+                        {
+                            break;
+                        }
+
+                        nb_marque = nb_marque+1;
+                    }
+                })
+                .catch((error) => {
+                    console.log(error)
+                });
+            }
+            makeGetMarque();
         </script>
+
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand" href="#page-top"><img id="navbar-logo" src="" alt="" /></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars ms-1"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#portfolio">Nos marques</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        
 
         <!-- Masthead-->
         <header class="masthead">            
-            <div id="carouselExampleIndicators" class="carousel slide w-100 h-75" data-bs-ride="carousel">
+            <div id="carouselExampleIndicators" class="carousel slide w-100 h-50" data-bs-ride="carousel">
                 <div id="butSlide" class="carousel-indicators">
                     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
                         class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -122,7 +211,7 @@
                 
                 <div id="slider" class="carousel-inner">
                     <div class="carousel-item active">
-                        <img id='img_slide1' src="http://admin.ham05.com:8055/assets/d5aafd04-47de-4d3f-8dce-0ada3bfd28da" class='d-block w-100' alt='...'>
+                        <img src="http://admin.ham05.com:8055/assets/d5aafd04-47de-4d3f-8dce-0ada3bfd28da" class='d-block w-100' alt='...'>
                         <div class="carousel-caption d-none d-sm-block top-50 align-middle">
                             <div id="titre" class="masthead-subheading start-50 text-red"></div>
                             <div id="description" class="start-50"></div>
@@ -210,63 +299,19 @@
         <section class="page-section bg-light" id="portfolio">
             <div class="container">
                 <div class="text-center">
-                    <h2 class="section-heading text-uppercase">Portfolio</h2>
-                    <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+                    <h2 class="section-heading text-uppercase">Marques</h2>
+                    <h3 class="section-subheading text-muted">Nos marques disponible</h3>
                 </div>
-                <div class="row">
-                    <div class="col-lg-4 col-sm-6 mb-4">
-                        <!-- Portfolio item 1-->
-                        <div class="portfolio-item">
-                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
-                                <div class="portfolio-hover">
-                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                                </div>
-                                <img id="portfolioImg1" class="img-fluid" src="assets/img/portfolio/1.jpg" alt="..." />
-                            </a>
-                            <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading">Threads</div>
-                                <div class="portfolio-caption-subheading text-muted">Illustration</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-6 mb-4">
-                        <!-- Portfolio item 2-->
-                        <div class="portfolio-item">
-                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal2">
-                                <div class="portfolio-hover">
-                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                                </div>
-                                <img class="img-fluid" src="assets/img/portfolio/2.jpg" alt="..." />
-                            </a>
-                            <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading">Explore</div>
-                                <div class="portfolio-caption-subheading text-muted">Graphic Design</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-6 mb-4">
-                        <!-- Portfolio item 3-->
-                        <div class="portfolio-item">
-                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal3">
-                                <div class="portfolio-hover">
-                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                                </div>
-                                <img class="img-fluid" src="assets/img/portfolio/3.jpg" alt="..." />
-                            </a>
-                            <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading">Finish</div>
-                                <div class="portfolio-caption-subheading text-muted">Identity</div>
-                            </div>
-                        </div>
-                    </div>
+                <div id="row" class="row">
+                    <!--
                     <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
-                        <!-- Portfolio item 4-->
+                        <!-- Portfolio item 4
                         <div class="portfolio-item">
                             <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal4">
                                 <div class="portfolio-hover">
                                     <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                                 </div>
-                                <img class="img-fluid" src="assets/img/portfolio/4.jpg" alt="..." />
+                                <img id="imgMarque4" class="img-fluid" src="assets/img/portfolio/4.jpg" alt="..." />
                             </a>
                             <div class="portfolio-caption">
                                 <div class="portfolio-caption-heading">Lines</div>
@@ -275,7 +320,7 @@
                         </div>
                     </div>
                     <div class="col-lg-4 col-sm-6 mb-4 mb-sm-0">
-                        <!-- Portfolio item 5-->
+                        <!-- Portfolio item 5
                         <div class="portfolio-item">
                             <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal5">
                                 <div class="portfolio-hover">
@@ -290,7 +335,7 @@
                         </div>
                     </div>
                     <div class="col-lg-4 col-sm-6">
-                        <!-- Portfolio item 6-->
+                        <!-- Portfolio item 6
                         <div class="portfolio-item">
                             <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal6">
                                 <div class="portfolio-hover">
@@ -303,7 +348,7 @@
                                 <div class="portfolio-caption-subheading text-muted">Photography</div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </section>

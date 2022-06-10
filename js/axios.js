@@ -49,3 +49,25 @@
 // }).catch(function (error) {
 //   console.error(error);
 // });
+
+
+
+// const options = {
+            //     method: 'GET',
+            //     url: 'http://admin.ham05.com:8055/items/homepage',
+            //     headers: {'Content-Type': 'application/json'}
+            // };
+                
+            // axios.request('http://admin.ham05.com:8055/items/homepage').then(function (response) {
+            //     console.log(response.data);
+            //     document.getElementById("titre").innerHTML = (response.data["data"]["Titre"]);
+            //     document.getElementById("description").innerHTML = (response.data["data"]["Description"]);
+
+            //     //Logo
+            //     var dataLogo = (response.data["data"]["Logo"]);
+            //     console.log("donnée image logo: "+dataLogo);
+            //     document.getElementById("navbar-logo").setAttribute("src", "http://admin.ham05.com:8055/assets/"+dataLogo);
+            //     document.getElementById("navbar-logo").setAttribute("alt", "http://admin.ham05.com:8055/assets/"+dataLogo);
+            // }).catch(function (error) {
+            //     console.error(error);
+            // });
