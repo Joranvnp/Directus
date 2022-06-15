@@ -24,7 +24,9 @@
             .get("http://admin.ham05.com:8055/items/homepage")
             .then((response) => {
                 console.log(response.data);
-                // document.getElementById("titre").innerHTML = (response.data["data"]["Titre"]);
+                 // AJout du texte
+                //  let html = innerHTML(response.data["data"]["Titre"]);
+                // divSlide.innerHTML = innerHTML(response.data["data"]["Titre"]);
                 // document.getElementById("description").innerHTML = (response.data["data"]["Description"]);
 
                 //Logo
@@ -48,26 +50,22 @@
                 var butSlideIndicators = document.createElement('div');
                 butSlideIndicators.setAttribute("class", "carousel-indicators");
                 document.getElementById("carouselExampleIndicators").appendChild(butSlideIndicators);
+                var nb_slide = 0;
+                
 
-                while (nb_slide <= slideImgLength)
+                while (nb_slide < slideImgLength)
                 {
                     // Données JSON de chaque image
+                    // var dataImg = (response.data["data"][nb_slide]["directus_files_id"]); //
                     var dataImg = (response.data["data"][nb_slide]["directus_files_id"]);
-                    console.log("donnée image slider: "+dataImg);
 
-
-                    // if(butSlide.getAttribute("data-bs-slide-to") > 1)
-                    // {
-                    //     butSlide.setAttribute("class", "");
-                    //     butSlide.removeAttribute("aria-current");
-                    // }
-
+                    console.log(dataImg);
 
                     // Création des Sliders
                     var divSlide = document.createElement('div');
                     divSlide.setAttribute("class", "carousel-item active");
                     divSlide.setAttribute("id", "slide"+nb_slide);
-                    console.log("nombre de slide: "+nb_slide)
+                    console.log("nombre de slide: "+nb_slide);
 
                     // Bouton pour défiler les images
                     var butSlide = document.createElement('button');
@@ -93,9 +91,6 @@
                     {
                         divSlide.setAttribute("class", "carousel-item");
                         butSlide.removeAttribute("class", "active");
-                        butSlide.removeAttribute("aria-current","true");
-                        // butSlide.setAttribute("data-bs-slide-to", nb_slide);
-                        // butSlide.setAttribute("class", "");
                     }
                     nb_slide = nb_slide+1;
 
@@ -117,13 +112,15 @@
         let response = await axios
             .get("http://admin.ham05.com:8055/items/Marques")
             .then((response) => {
-                var marqueImgLength = (response.data["data"]).length;
-                console.log(marqueImgLength);
+                var marqueImgLength = (response.data["data"].length);
+                // console.log(marqueImgLength);
+                // var dataMarqueId = (response.data["data"][nb_marque]["Photo"])
+                // console.log(dataMarqueId);
 
-                while (nb_marque <= marqueImgLength)
+                while (nb_marque < marqueImgLength)
                 {
                     var dataMarque = (response.data["data"][nb_marque]["Photo"]);
-                    // console.log(response.data["data"][nb_marque]);
+                    console.log(response.data["data"][nb_marque]["Photo"]);
 
                     //Bloc parent pour les marques
                     var row = document.getElementById("row");
@@ -200,24 +197,109 @@
         let response = await axios
             .get("http://admin.ham05.com:8055/items/Marques")
             .then((response) => {
-                var marqueModalBloc = document.createElement('div');
-                marqueModalBloc.setAttribute("class", "portfolio-modal modal fade");
-                marqueModalBloc.setAttribute("id", "portfolioModal1");
-                marqueModalBloc.setAttribute("tabindex", "-1");
-                marqueModalBloc.setAttribute("role", "dialog");
-                marqueModalBloc.setAttribute("aria-hidden", "true");
+                var marqueImgLength = (response.data["data"].length);
+                console.log(marqueImgLength);
+                let nb_marque = 0;
+                while (nb_marque < marqueImgLength)
+                {
+                    var dataMarque = (response.data["data"][nb_marque]["Photo"]);
 
-                var pageTop = document.getElementById("page-top");
-                pageTop.appendChild(marqueModalBloc);
+                    var marqueModalBloc = document.createElement('div');
+                    marqueModalBloc.setAttribute("class", "portfolio-modal modal fade");
+                    marqueModalBloc.setAttribute("id", "portfolioModal"+(nb_marque+1));
+                    marqueModalBloc.setAttribute("tabindex", "-1");
+                    marqueModalBloc.setAttribute("role", "dialog");
+                    marqueModalBloc.setAttribute("aria-hidden", "true");
 
-                var marqueModalBlocDialog = createElement('div');
-                marqueModalBlocDialog.setAttribute("class", "modal-dialog");
-                marqueModalBloc.appendChild(marqueModalBlocDialog);
-                document.getElementById("portfolioModal1")
+                    var pageTop = document.getElementById("page-top");
+                    pageTop.appendChild(marqueModalBloc);
 
-                var marqueModalBlocContent = createElement('div');
-                marqueModalBlocContent.setAttribute("class", "modal-content");
-                marqueModalBlocDialog.appendChild(marqueModalBlocContent);
+                    var marqueModalBlocDialog = document.createElement('div');
+                    marqueModalBlocDialog.setAttribute("class", "modal-dialog");
+                    marqueModalBloc.appendChild(marqueModalBlocDialog);
+                    // document.getElementById("portfolioModal1");
+
+                    var marqueModalBlocContent = document.createElement('div');
+                    marqueModalBlocContent.setAttribute("class", "modal-content");
+                    marqueModalBlocDialog.appendChild(marqueModalBlocContent);
+
+                    var marqueModalClose = document.createElement('div');
+                    marqueModalClose.setAttribute("class", "close-modal");
+                    marqueModalClose.setAttribute("data-bs-dismiss", "modal");
+                    marqueModalBlocContent.appendChild(marqueModalClose);
+
+                    // var marqueImgLength = (response.data["data"].length);
+                    // // nb_marque = 0;
+                    // while (nb_marque <= marqueImgLength)
+                    // {
+                    //     var dataMarque = (response.data["data"][nb_marque]["Photo"]);
+                        // if(nb_marque >= marqueImgLength)
+                        // {
+                        //     break;
+                        // }
+
+                        // nb_marque = nb_marque+1;
+                    // }
+
+                    // Image icone à récupérer de directus
+                    var marqueModalImg = document.createElement('img');
+                    marqueModalImg.setAttribute("src", "assets/img/close-icon.svg");
+                    marqueModalImg.setAttribute("alt", "Close modal");
+                    marqueModalClose.appendChild(marqueModalImg);
+
+                    var marqueModalContainer = document.createElement('div');
+                    marqueModalContainer.setAttribute("class", "container");
+                    marqueModalBlocContent.appendChild(marqueModalContainer);
+
+                    var marqueModalRow = document.createElement('div');
+                    marqueModalRow.setAttribute("class", "row justify-content-center");
+                    marqueModalContainer.appendChild(marqueModalRow);
+
+                    var marqueModalCol = document.createElement('div');
+                    marqueModalCol.setAttribute("class", "col-lg-8");
+                    marqueModalRow.appendChild(marqueModalCol);
+
+                    var marqueModalBody = document.createElement('div');
+                    marqueModalBody.setAttribute("class","modal-body");
+                    marqueModalCol.appendChild(marqueModalBody);
+
+                    var marqueModalText = document.createElement('h2');
+                    marqueModalText.setAttribute("class", "text-uppercase");
+                    marqueModalText.innerHTML = ("Test");
+
+                    var marqueModalItem = document.createElement('p');
+                    marqueModalItem.setAttribute("class", "item-intro text-muted");
+                    marqueModalItem.innerHTML = ("test");
+
+                    var marqueModalImgFluid = document.createElement('img');
+                    marqueModalImgFluid.setAttribute("class", "img-fluid d-block mx-auto");
+                    marqueModalImgFluid.setAttribute("src", "http://admin.ham05.com:8055/assets/"+dataMarque);
+                    marqueModalImgFluid.setAttribute("alt","http://admin.ham05.com:8055/assets/"+dataMarque);
+
+                    var marqueModalItemP = document.createElement('p');
+                    marqueModalItemP.innerHTML = ("description");
+
+                    marqueModalBody.appendChild(marqueModalText);
+                    marqueModalBody.appendChild(marqueModalItem);
+                    marqueModalBody.appendChild(marqueModalImgFluid);
+                    marqueModalBody.appendChild(marqueModalItemP);
+
+                    var marqueModalList = document.createElement('ul');
+                    marqueModalList.setAttribute("class", "list-inline");
+                    var marqueModalListUl = document.createElement('li');
+                    var marqueModalListStrong = document.createElement('strong');
+
+
+                    if (nb_marque > marqueImgLength)
+                    {
+                        break;
+                    }
+
+                    console.log("je passe"+nb_marque+"fois dans la boucle");
+
+                    nb_marque = nb_marque+1;
+   
+                }
             })
             .catch((error) => {
                 console.log(error)
