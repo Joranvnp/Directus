@@ -38,7 +38,18 @@
                 var datamapImg = (response.data["data"]["Map"]);
                 console.log("mapimg"+datamapImg);
                 // document.getElementById("mapImg").setAttribute("src", "http://admin.ham05.com:8055/assets/"+datamapImg);
-                document.getElementById("contact").setAttribute("style", "background-image: url(http://admin.ham05.com:8055/assets/"+datamapImg);
+                // document.getElementById("contact").setAttribute("style", "background-image: url(http://admin.ham05.com:8055/assets/"+datamapImg);
+
+                // var dataImgBackground = (response.data["data"]["fond"]);
+                // console.log(dataImgBackground);
+                // var imgSlideBackground = document.createElement('img');
+                // imgSlideBackground.setAttribute("style", "background-image: url(http://admin.ham05.com:8055/assets/"+dataImgBackground);
+                // divSlideBackground = document.getElementsByClassName("carousel-item");
+                // divSlideBackground.appendChild(imgSlideBackground);
+                // divSlideBackground.getElementById("divSlideBackground").appendChild(imgSlideBackground)
+            })
+            .catch((error) => {
+                console.log(error);
             })
         }
         makeGetHomepage();
@@ -57,6 +68,22 @@
                 document.getElementById("carouselExampleIndicators").appendChild(butSlideIndicators);
                 var nb_slide = 0;
                 
+                // document.getElementById("slider").setAttribute("style", "-webkit-filter: blur(3px);	filter: blur(3px);	-webkit-transition: .3s ease-in-out;	transition: .3s ease-in-out background-image: url(http://admin.ham05.com:8055/assets/"+response.data["data"]["0"]["directus_files_id"]);
+
+                // Image fond slider flou
+                // var imgSlideBackground = document.createElement('img');
+                //imgSlideBackground.setAttribute("style", "background-image: url(http://admin.ham05.com:8055/assets/"+response.data["data"]["0"]["directus_files_id"]);
+                // imgSlideBackground.setAttribute("src", "http://admin.ham05.com:8055/assets/"+response.data["data"]["0"]["directus_files_id"]);
+                // imgSlideBackground.setAttribute("style", "d-block mx-auto px-auto")
+                // document.getElementById("slider").appendChild(imgSlideBackground);
+
+                
+                //let prev_button = document.getElementsByClassName("carousel-control-prev").
+
+
+                //prev_button.setAttribute("style","background:#fff ");
+                // console.log("-->"+imgSlideBackground);
+
 
                 while (nb_slide < slideImgLength)
                 {
@@ -69,8 +96,11 @@
                     // Création des Sliders
                     var divSlide = document.createElement('div');
                     divSlide.setAttribute("class", "carousel-item active");
+                    // imgSlide.setAttribute("style", "background: transparent");
+                    divSlide.setAttribute("style", "-webkit-filter: blur(3px);filter: blur(3px);-webkit-transition: .3s ease-in-out;transition: .3s ease-in-out;background-image: url(http://admin.ham05.com:8055/assets/"+response.data["data"]["0"]["directus_files_id"]);
+                    
                     divSlide.setAttribute("id", "slide"+nb_slide);
-                    console.log("nombre de slide: "+nb_slide);
+                    console.log("nombre de slide: "+nb_slide);                    
 
                     // Bouton pour défiler les images
                     var butSlide = document.createElement('button');
@@ -84,9 +114,17 @@
 
                     // Création des images pour chaque slider
                     var imgSlide = document.createElement('img');
-                    imgSlide.setAttribute("class","d-block w-100");
+                    imgSlide.setAttribute("class","img-fluid d-block mx-auto px-auto");
+                    imgSlide.setAttribute("height","844px");
+                    imgSlide.setAttribute("style", "-webkit-filter: blur(0px);filter: blur(0px)")
+                    // imgSlide.setAttribute("style","background: transparent");
+                    // imgSlide.setAttribute("width","100%");
                     imgSlide.src = "http://admin.ham05.com:8055/assets/"+dataImg;
                     divSlide.appendChild(imgSlide);
+
+                    // var imgSlideBackground = document.createElement('img');
+                    // imgSlideBackground.setAttribute("style", "-webkit-filter: blur(3px); filter: blur(3px);-webkit-transition: .3s ease-in-out;transition: .3s ease-in-out;")
+                    // document.getElementById("slider").appendChild(imgSlideBackground);
 
                     // Ajout des sliders au div parent
                     var slider = document.getElementById("slider");
@@ -103,7 +141,6 @@
                     {
                         break;
                     }
-
                 }
             })
             .catch((error) => {
@@ -463,32 +500,6 @@
                     <h2 class="section-heading text-uppercase">Services</h2>
                     <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
                 </div>
-                <!-- <div class="row text-center">
-                    <div class="col-md-4">
-                        <span class="fa-stack fa-4x">
-                            <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                            <i class="fas fa-shopping-cart fa-stack-1x fa-inverse"></i>
-                        </span>
-                        <h4 class="my-3">E-Commerce</h4>
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
-                    </div>
-                    <div class="col-md-4">
-                        <span class="fa-stack fa-4x">
-                            <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                            <i class="fas fa-laptop fa-stack-1x fa-inverse"></i>
-                        </span>
-                        <h4 class="my-3">Responsive Design</h4>
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
-                    </div>
-                    <div class="col-md-4">
-                        <span class="fa-stack fa-4x">
-                            <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                            <i class="fas fa-lock fa-stack-1x fa-inverse"></i>
-                        </span>
-                        <h4 class="my-3">Web Security</h4>
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
-                    </div>
-                </div> -->
             </div>
         </section>
         <!-- Portfolio Grid-->

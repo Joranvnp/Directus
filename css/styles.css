@@ -601,7 +601,6 @@ progress {
 
 .img-fluid {
   max-width: 100%;
-  height: auto;
 }
 
 .img-thumbnail {
@@ -11410,12 +11409,20 @@ header.masthead {
   padding-bottom: 6rem;
   text-align: center;
   color: grey;
-  /*background-image: url("../assets/img/header-bg.jpg");*/
+  /* background-image: url("../assets/img/header-bg.jpg"); */
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-position: center center;
   background-size: cover;
+  
 } 
+.blur div img {
+	-webkit-filter: blur(3px);
+	filter: blur(3px);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+
 header.masthead .masthead-subheading {
   font-size: 1.5rem;
   font-style: italic;
@@ -11871,7 +11878,7 @@ section#contact form#contactForm :-ms-input-placeholder {
 @media only screen and (max-width: 300px) {
   .prev, .next,.text {font-size: 11px}
 }
-
+/*
 .item img {
   position: absolute;
   object-fit: cover;
@@ -11880,4 +11887,25 @@ section#contact form#contactForm :-ms-input-placeholder {
   left: 0;
   min-height: 572px;
   background: #087990;
+}*/
+
+.carousel .item {
+  height: 300px;
+}
+
+.item img {
+    position: absolute;
+    top: 0;
+    left: 0;
+   height: 844px;
+}
+
+.carousel-control-prev{
+  /* background: #0c4128 !important; */
+  background: transparent;
+}
+
+.carousel-control-next{
+  /* background: #0c4128 !important; */
+  background: transparent;
 }
