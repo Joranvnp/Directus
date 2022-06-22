@@ -19,437 +19,417 @@
     </head>
 
     <script>
-        async function makeGetHomepage() {
-        let response = await axios
-            .get("http://admin.ham05.com:8055/items/homepage")
-            .then((response) => {
-                console.log(response.data);
-                 // AJout du texte
-                //  let html = innerHTML(response.data["data"]["Titre"]);
-                // divSlide.innerHTML = innerHTML(response.data["data"]["Titre"]);
-                // document.getElementById("description").innerHTML = (response.data["data"]["Description"]);
 
-                //Logo
-                var dataLogo = (response.data["data"]["Logo"]);
-                console.log("donnée image logo: "+dataLogo);
-                document.getElementById("navbar-logo").setAttribute("src", "http://admin.ham05.com:8055/assets/"+dataLogo);
-                document.getElementById("navbar-logo").setAttribute("alt", "http://admin.ham05.com:8055/assets/"+dataLogo);
+        document.addEventListener("DOMContentLoaded", function(){
+            async function makeGetHomepage() {
+            let response = await axios
+                .get("http://admin.ham05.com:8055/items/homepage")
+                .then((response) => {
+                    console.log(response.data);
+                    // AJout du texte
+                    //  let html = innerHTML(response.data["data"]["Titre"]);
+                    // divSlide.innerHTML = innerHTML(response.data["data"]["Titre"]);
+                    // document.getElementById("description").innerHTML = (response.data["data"]["Description"]);
 
-                var datamapImg = (response.data["data"]["Map"]);
-                console.log("mapimg"+datamapImg);
-                // document.getElementById("mapImg").setAttribute("src", "http://admin.ham05.com:8055/assets/"+datamapImg);
-                // document.getElementById("contact").setAttribute("style", "background-image: url(http://admin.ham05.com:8055/assets/"+datamapImg);
+                    //Logo
+                    var dataLogo = (response.data["data"]["Logo"]);
+                    console.log("donnée image logo: "+dataLogo);
+                    document.getElementById("navbar-logo").setAttribute("src", "http://admin.ham05.com:8055/assets/"+dataLogo);
+                    document.getElementById("navbar-logo").setAttribute("alt", "http://admin.ham05.com:8055/assets/"+dataLogo);
 
-                // var dataImgBackground = (response.data["data"]["fond"]);
-                // console.log(dataImgBackground);
-                // var imgSlideBackground = document.createElement('img');
-                // imgSlideBackground.setAttribute("style", "background-image: url(http://admin.ham05.com:8055/assets/"+dataImgBackground);
-                // divSlideBackground = document.getElementsByClassName("carousel-item");
-                // divSlideBackground.appendChild(imgSlideBackground);
-                // divSlideBackground.getElementById("divSlideBackground").appendChild(imgSlideBackground)
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-        }
-        makeGetHomepage();
+                    var datamapImg = (response.data["data"]["Map"]);
+                    console.log("mapimg"+datamapImg);
+                    // document.getElementById("mapImg").setAttribute("src", "http://admin.ham05.com:8055/assets/"+datamapImg);
+                    document.getElementById("contact").setAttribute("style", "background-image: url(http://admin.ham05.com:8055/assets/"+datamapImg);
 
-        var nb_slide = 0;
-        async function makeGetImage() {
-        let response = await axios
-            .get("http://admin.ham05.com:8055/items/homepage_files")
-            .then((response) => {
-                var slideImgLength = (response.data["data"]).length;
-                console.log("nombre d'image dans le slide: "+slideImgLength);
-
-                // Ajout des boutons
-                var butSlideIndicators = document.createElement('div');
-                butSlideIndicators.setAttribute("class", "carousel-indicators");
-                document.getElementById("carouselExampleIndicators").appendChild(butSlideIndicators);
-                var nb_slide = 0;
-                
-                // document.getElementById("slider").setAttribute("style", "-webkit-filter: blur(3px);	filter: blur(3px);	-webkit-transition: .3s ease-in-out;	transition: .3s ease-in-out background-image: url(http://admin.ham05.com:8055/assets/"+response.data["data"]["0"]["directus_files_id"]);
-
-                // Image fond slider flou
-                // var imgSlideBackground = document.createElement('img');
-                //imgSlideBackground.setAttribute("style", "background-image: url(http://admin.ham05.com:8055/assets/"+response.data["data"]["0"]["directus_files_id"]);
-                // imgSlideBackground.setAttribute("src", "http://admin.ham05.com:8055/assets/"+response.data["data"]["0"]["directus_files_id"]);
-                // imgSlideBackground.setAttribute("style", "d-block mx-auto px-auto")
-                // document.getElementById("slider").appendChild(imgSlideBackground);
-
-                
-                //let prev_button = document.getElementsByClassName("carousel-control-prev").
-
-
-                //prev_button.setAttribute("style","background:#fff ");
-                // console.log("-->"+imgSlideBackground);
-
-
-                while (nb_slide < slideImgLength)
-                {
-                    // Données JSON de chaque image
-                    // var dataImg = (response.data["data"][nb_slide]["directus_files_id"]); //
-                    var dataImg = (response.data["data"][nb_slide]["directus_files_id"]);
-
-                    console.log(dataImg);
-
-                    // Création des Sliders
-                    var divSlide = document.createElement('div');
-                    divSlide.setAttribute("class", "carousel-item active");
-                    // imgSlide.setAttribute("style", "background: transparent");
-                    divSlide.setAttribute("style", "-webkit-filter: blur(3px);filter: blur(3px);-webkit-transition: .3s ease-in-out;transition: .3s ease-in-out;background-image: url(http://admin.ham05.com:8055/assets/"+response.data["data"]["0"]["directus_files_id"]);
-                    
-                    divSlide.setAttribute("id", "slide"+nb_slide);
-                    console.log("nombre de slide: "+nb_slide);                    
-
-                    // Bouton pour défiler les images
-                    var butSlide = document.createElement('button');
-                    butSlide.setAttribute("type", "button");
-                    butSlide.setAttribute("data-bs-target", "#carouselExampleIndicators");
-                    butSlide.setAttribute("data-bs-slide-to", nb_slide);
-                    butSlide.setAttribute("aria-label", "Slide"+nb_slide);
-                    butSlide.setAttribute("class", "active");
-                    butSlide.setAttribute("aria-current","true");
-                    butSlideIndicators.appendChild(butSlide);
-
-                    // Création des images pour chaque slider
-                    var imgSlide = document.createElement('img');
-                    imgSlide.setAttribute("class","img-fluid d-block mx-auto px-auto");
-                    imgSlide.setAttribute("height","844px");
-                    imgSlide.setAttribute("style", "-webkit-filter: blur(0px);filter: blur(0px)")
-                    // imgSlide.setAttribute("style","background: transparent");
-                    // imgSlide.setAttribute("width","100%");
-                    imgSlide.src = "http://admin.ham05.com:8055/assets/"+dataImg;
-                    divSlide.appendChild(imgSlide);
-
+                    // var dataImgBackground = (response.data["data"]["fond"]);
+                    // console.log(dataImgBackground);
                     // var imgSlideBackground = document.createElement('img');
-                    // imgSlideBackground.setAttribute("style", "-webkit-filter: blur(3px); filter: blur(3px);-webkit-transition: .3s ease-in-out;transition: .3s ease-in-out;")
-                    // document.getElementById("slider").appendChild(imgSlideBackground);
+                    // imgSlideBackground.setAttribute("style", "background-image: url(http://admin.ham05.com:8055/assets/"+dataImgBackground);
+                    // divSlideBackground = document.getElementsByClassName("carousel-item");
+                    // divSlideBackground.appendChild(imgSlideBackground);
+                    // divSlideBackground.getElementById("divSlideBackground").appendChild(imgSlideBackground)
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+            }
+            makeGetHomepage();
 
-                    // Ajout des sliders au div parent
-                    var slider = document.getElementById("slider");
-                    slider.appendChild(divSlide);
+            var nb_slide = 0;
+            async function makeGetImage() {
+            let response = await axios
+                .get("http://admin.ham05.com:8055/items/homepage_files")
+                .then((response) => {
+                    var slideImgLength = (response.data["data"]).length;
+                    console.log("nombre d'image dans le slide: "+slideImgLength);
+                   
+                    var nb_slide = 0;
 
-                    if(nb_slide > 0)
+                    while (nb_slide < slideImgLength)
                     {
-                        divSlide.setAttribute("class", "carousel-item");
-                        butSlide.removeAttribute("class", "active");
-                    }
-                    nb_slide = nb_slide+1;
+                        // Données JSON de chaque image
+                        var dataImg = (response.data["data"][nb_slide]["directus_files_id"]);
 
-                    if(nb_slide > slideImgLength)
+                        console.log(dataImg);
+
+                        // Création des Sliders
+                        var divSlide = document.createElement('div');
+                        var divSlideBg = document.createElement('div');
+
+                        if(nb_slide==0){
+                            divSlide.setAttribute("class", "carousel-item active");
+                            divSlideBg.setAttribute("class", "carousel-item active");
+                        } else{
+                            divSlide.setAttribute("class", "carousel-item");
+                            divSlideBg.setAttribute("class", "carousel-item");
+                        }
+
+                        // divSlide.setAttribute("style", "-webkit-filter: blur(3px);filter: blur(3px);background-image: url(http://admin.ham05.com:8055/assets/"+response.data["data"]["0"]["directus_files_id"]);
+                        
+                        // Création des deux sliders
+                        divSlide.setAttribute("id", "slide"+nb_slide);
+                        divSlide.setAttribute("data-interval" ,"10");
+                        divSlideBg.setAttribute("id", "slide"+nb_slide);
+
+                        console.log("nombre de slide: "+nb_slide);
+                        console.log("nombre de slide bg: "+nb_slide);                  
+
+                        // Création des images du slider
+                        var imgSlide = document.createElement('img');
+                        imgSlide.src = "http://admin.ham05.com:8055/assets/"+dataImg;
+                        imgSlide.setAttribute("class","img-fluid d-block mx-auto px-auto");
+                        imgSlide.setAttribute("height","844px");
+                        imgSlide.setAttribute("width", "100%");
+                        imgSlide.setAttribute("style","background: transparent");
+                        divSlide.appendChild(imgSlide);
+
+                        
+                        // Création des images du slider background
+                        var imgSlideBg = document.createElement('img');
+                        imgSlideBg.setAttribute("id","sliderbg");
+                        imgSlideBg.src = "http://admin.ham05.com:8055/assets/"+dataImg;
+                        imgSlideBg.setAttribute("class","img-fluid d-block mx-auto px-auto");
+                        imgSlideBg.setAttribute("height","844px");
+                        imgSlideBg.setAttribute("width", "100%");
+                        imgSlideBg.setAttribute("data-bs-slide", "prev");
+
+                        // document.getElementById("slideBg").appendChild(imgSlideBg);
+                        divSlideBg.appendChild(imgSlideBg);
+                        var butSlideIndicators = document.getElementById("carousel-indicators");
+                        butSlideIndicators.setAttribute("style","z-index: 20");
+
+                        // Bouton pour défiler les images
+                        var butSlide = document.createElement('button');
+                        butSlide.setAttribute("type", "button");
+                        butSlide.setAttribute("data-bs-target", "#carouselExampleIndicators");
+                        butSlide.setAttribute("data-bs-slide-to", nb_slide);
+                        butSlide.setAttribute("aria-label", "Slide"+nb_slide);
+                        if(nb_slide==0){
+                            butSlide.setAttribute("class", "active");
+                        }else{
+                            console.log("le slide est à"+nb_slide);
+                        }
+                        butSlideIndicators.appendChild(butSlide);
+
+                        // Ajout des sliders au div parent
+                        var slider = document.getElementById("slider");
+                        slider.setAttribute("filter", "inherit")
+                        slider.appendChild(divSlide);
+                        document.getElementById("slideBg").appendChild(divSlideBg);
+
+                        nb_slide++;
+
+                        if(nb_slide > slideImgLength)
+                        {
+                            break;
+                        }
+                    }
+                })
+                .catch((error) => {
+                    console.log(error)
+                });
+            }
+            makeGetImage();
+
+            var nb_marque = 0;
+            async function makeGetMarque() {
+            let response = await axios
+                .get("http://admin.ham05.com:8055/items/Marques")
+                .then((response) => {
+                    var marqueImgLength = (response.data["data"].length);
+                    // console.log(marqueImgLength);
+                    // var dataMarqueId = (response.data["data"][nb_marque]["Photo"])
+                    // console.log(dataMarqueId);
+
+                    while (nb_marque < marqueImgLength)
                     {
-                        break;
+                        var dataMarque = (response.data["data"][nb_marque]["Photo"]);
+                        console.log(response.data["data"][nb_marque]["Photo"]);
+
+                        //Bloc parent pour les marques
+                        var row = document.getElementById("row");
+
+                        //Création marque bloc
+                        var imgMarqueBloc = document.createElement('div');
+                        imgMarqueBloc.setAttribute("class", "col-lg-4 col-sm-6 mb-4");
+                        row.appendChild(imgMarqueBloc);
+                        
+                        var marqueBloc = document.createElement('div');
+                        marqueBloc.setAttribute("class","portfolio-item");
+                        imgMarqueBloc.appendChild(marqueBloc);
+
+                        var marqueBlocLink = document.createElement('a');
+                        marqueBlocLink.setAttribute("class", "portfolio-link");
+                        marqueBlocLink.setAttribute("data-bs-toggle", "modal");
+                        marqueBlocLink.setAttribute("href", "#portfolioModal"+(nb_marque +1));
+                        marqueBloc.appendChild(marqueBlocLink);
+
+                        // Marque hover
+                        var marqueHover = document.createElement('div');
+                        marqueHover.setAttribute("class", "portfolio-hover");
+                        marqueBlocLink.appendChild(marqueHover);
+
+                        var marqueHoverContent = document.createElement('div');
+                        marqueHoverContent.setAttribute("class", "portfolio-hover-content");
+                        marqueHover.appendChild(marqueHoverContent);
+
+                        var marqueHoverContentI = document.createElement('i');
+                        marqueHoverContentI.setAttribute("class", "fas fa-plus fa-3x");
+                        marqueHoverContent.appendChild(marqueHoverContentI);
+
+                        // Marque image dans les blocs
+                        var imgMarque = document.createElement("img");
+                        imgMarque.setAttribute("src", "http://admin.ham05.com:8055/assets/"+dataMarque);
+                        imgMarque.setAttribute("class", "img-fluid d-block mx-auto px-auto"); // Image taille
+                        marqueBlocLink.appendChild(imgMarque);
+
+                        // Marque caption text
+                        var marqueBlocCaption = document.createElement('div');
+                        marqueBlocCaption.setAttribute("class", "portfolio-caption");
+                        marqueBloc.appendChild(marqueBlocCaption);
+
+                        var marqueBlocCaptionHeading = document.createElement('div');
+                        marqueBlocCaptionHeading.setAttribute("class", "portfolio-caption-heading");
+                        marqueBlocCaptionHeading.innerHTML = (response.data["data"][nb_marque]["Titre"]);
+                        var marqueBlocCaptionSubheading = document.createElement('div');
+                        marqueBlocCaptionSubheading.setAttribute("class", "portfolio-caption-subheading");
+                        marqueBlocCaptionSubheading.innerHTML = (response.data["data"][nb_marque]["Descriptif"]);
+
+                        marqueBlocCaption.appendChild(marqueBlocCaptionHeading);
+                        marqueBlocCaption.appendChild(marqueBlocCaptionSubheading);
+
+                        if (nb_marque > 3)
+                        {
+                            imgMarqueBloc.setAttribute("class", "col-lg-4 col-sm-6 mb-4 mb-lg-0");
+                        }
+
+                        if(nb_marque >= marqueImgLength)
+                        {
+                            break;
+                        }
+
+                        nb_marque = nb_marque+1;
                     }
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-            });
-        }
-        makeGetImage();
+                })
+                .catch((error) => {
+                    console.log(error)
+                });
+            }
+            makeGetMarque();
 
-        var nb_marque = 0;
-        async function makeGetMarque() {
-        let response = await axios
-            .get("http://admin.ham05.com:8055/items/Marques")
-            .then((response) => {
-                var marqueImgLength = (response.data["data"].length);
-                // console.log(marqueImgLength);
-                // var dataMarqueId = (response.data["data"][nb_marque]["Photo"])
-                // console.log(dataMarqueId);
-
-                while (nb_marque < marqueImgLength)
-                {
-                    var dataMarque = (response.data["data"][nb_marque]["Photo"]);
-                    console.log(response.data["data"][nb_marque]["Photo"]);
-
-                    //Bloc parent pour les marques
-                    var row = document.getElementById("row");
-
-                    //Création marque bloc
-                    var imgMarqueBloc = document.createElement('div');
-                    imgMarqueBloc.setAttribute("class", "col-lg-4 col-sm-6 mb-4");
-                    row.appendChild(imgMarqueBloc);
-                    
-                    var marqueBloc = document.createElement('div');
-                    marqueBloc.setAttribute("class","portfolio-item");
-                    imgMarqueBloc.appendChild(marqueBloc);
-
-                    var marqueBlocLink = document.createElement('a');
-                    marqueBlocLink.setAttribute("class", "portfolio-link");
-                    marqueBlocLink.setAttribute("data-bs-toggle", "modal");
-                    marqueBlocLink.setAttribute("href", "#portfolioModal"+(nb_marque +1));
-                    marqueBloc.appendChild(marqueBlocLink);
-
-                    // Marque hover
-                    var marqueHover = document.createElement('div');
-                    marqueHover.setAttribute("class", "portfolio-hover");
-                    marqueBlocLink.appendChild(marqueHover);
-
-                    var marqueHoverContent = document.createElement('div');
-                    marqueHoverContent.setAttribute("class", "portfolio-hover-content");
-                    marqueHover.appendChild(marqueHoverContent);
-
-                    var marqueHoverContentI = document.createElement('i');
-                    marqueHoverContentI.setAttribute("class", "fas fa-plus fa-3x");
-                    marqueHoverContent.appendChild(marqueHoverContentI);
-
-                    // Marque image dans les blocs
-                    var imgMarque = document.createElement("img");
-                    imgMarque.setAttribute("src", "http://admin.ham05.com:8055/assets/"+dataMarque);
-                    imgMarque.setAttribute("class", "img-fluid d-block mx-auto"); // Image taille
-                    marqueBlocLink.appendChild(imgMarque);
-
-                    // Marque caption text
-                    var marqueBlocCaption = document.createElement('div');
-                    marqueBlocCaption.setAttribute("class", "portfolio-caption");
-                    marqueBloc.appendChild(marqueBlocCaption);
-
-                    var marqueBlocCaptionHeading = document.createElement('div');
-                    marqueBlocCaptionHeading.setAttribute("class", "portfolio-caption-heading");
-                    marqueBlocCaptionHeading.innerHTML = (response.data["data"][nb_marque]["Titre"]);
-                    var marqueBlocCaptionSubheading = document.createElement('div');
-                    marqueBlocCaptionSubheading.setAttribute("class", "portfolio-caption-subheading");
-                    marqueBlocCaptionSubheading.innerHTML = (response.data["data"][nb_marque]["Descriptif"]);
-
-                    marqueBlocCaption.appendChild(marqueBlocCaptionHeading);
-                    marqueBlocCaption.appendChild(marqueBlocCaptionSubheading);
-
-                    if (nb_marque > 3)
+            async function getMarqueModal() {
+            let response = await axios
+                .get("http://admin.ham05.com:8055/items/Marques")
+                .then((response) => {
+                    var marqueImgLength = (response.data["data"].length);
+                    console.log(marqueImgLength);
+                    let nb_marque = 0;
+                    while (nb_marque < marqueImgLength)
                     {
-                        imgMarqueBloc.setAttribute("class", "col-lg-4 col-sm-6 mb-4 mb-lg-0");
-                    }
+                        var dataMarque = (response.data["data"][nb_marque]["Photo"]);
 
-                    if(nb_marque >= marqueImgLength)
+                        var marqueModalBloc = document.createElement('div');
+                        marqueModalBloc.setAttribute("class", "portfolio-modal modal fade");
+                        marqueModalBloc.setAttribute("id", "portfolioModal"+(nb_marque+1));
+                        marqueModalBloc.setAttribute("tabindex", "-1");
+                        marqueModalBloc.setAttribute("role", "dialog");
+                        marqueModalBloc.setAttribute("aria-hidden", "true");
+
+                        var pageTop = document.getElementById("page-top");
+                        pageTop.appendChild(marqueModalBloc);
+
+                        var marqueModalBlocDialog = document.createElement('div');
+                        marqueModalBlocDialog.setAttribute("class", "modal-dialog");
+                        marqueModalBloc.appendChild(marqueModalBlocDialog);
+                        // document.getElementById("portfolioModal1");
+
+                        var marqueModalBlocContent = document.createElement('div');
+                        marqueModalBlocContent.setAttribute("class", "modal-content");
+                        marqueModalBlocDialog.appendChild(marqueModalBlocContent);
+
+                        var marqueModalClose = document.createElement('div');
+                        marqueModalClose.setAttribute("class", "close-modal");
+                        marqueModalClose.setAttribute("data-bs-dismiss", "modal");
+                        marqueModalBlocContent.appendChild(marqueModalClose);
+
+                        // Image icone à récupérer de directus
+                        var marqueModalImg = document.createElement('img');
+                        marqueModalImg.setAttribute("src", "assets/img/close-icon.svg");
+                        marqueModalImg.setAttribute("alt", "Close modal");
+                        marqueModalImg.setAttribute("class", "d-block w-100");
+                        marqueModalClose.appendChild(marqueModalImg);
+
+                        var marqueModalContainer = document.createElement('div');
+                        marqueModalContainer.setAttribute("class", "container");
+                        marqueModalBlocContent.appendChild(marqueModalContainer);
+
+                        var marqueModalRow = document.createElement('div');
+                        marqueModalRow.setAttribute("class", "row justify-content-center");
+                        marqueModalContainer.appendChild(marqueModalRow);
+
+                        var marqueModalCol = document.createElement('div');
+                        marqueModalCol.setAttribute("class", "col-lg-8");
+                        marqueModalRow.appendChild(marqueModalCol);
+
+                        var marqueModalBody = document.createElement('div');
+                        marqueModalBody.setAttribute("class","modal-body");
+                        marqueModalCol.appendChild(marqueModalBody);
+
+                        var marqueModalText = document.createElement('h2');
+                        marqueModalText.setAttribute("class", "text-uppercase");
+                        marqueModalText.innerHTML = (response.data["data"][nb_marque]["Titre"]);
+
+                        var marqueModalItem = document.createElement('p');
+                        marqueModalItem.setAttribute("class", "item-intro text-muted");
+                        // marqueModalItem.innerHTML = ("test");
+
+                        var marqueModalImgFluid = document.createElement('img');
+                        marqueModalImgFluid.setAttribute("class", "img-fluid d-block mx-auto");
+                        marqueModalImgFluid.setAttribute("src", "http://admin.ham05.com:8055/assets/"+dataMarque);
+                        marqueModalImgFluid.setAttribute("alt","http://admin.ham05.com:8055/assets/"+dataMarque);
+
+                        var marqueModalItemP = document.createElement('p');
+                        marqueModalItemP.innerHTML = (response.data["data"][nb_marque]["Descriptif"]);
+
+                        // Texte et image dans la balise modal-body
+                        marqueModalBody.appendChild(marqueModalText);
+                        marqueModalBody.appendChild(marqueModalItem);
+                        marqueModalBody.appendChild(marqueModalImgFluid);
+                        marqueModalBody.appendChild(marqueModalItemP);
+
+                        var marqueModalList = document.createElement('ul');
+                        marqueModalList.setAttribute("class", "list-inline");
+                        var marqueModalListUl = document.createElement('li');
+                        var marqueModalListStrong = document.createElement('strong');
+
+                        var marqueModalButton = document.createElement('button');
+                        marqueModalButton.setAttribute("class", "btn btn-primary btn-xl text-uppercase");
+                        marqueModalButton.setAttribute("data-bs-dismiss", "modal");
+                        marqueModalButton.setAttribute("type", "button");
+                        marqueModalBody.appendChild(marqueModalButton);
+
+                        var marqueModalButtonI = document.createElement('i');
+                        marqueModalButtonI.setAttribute("class", "fas fa-xmark me-1");
+                        marqueModalButton.appendChild(marqueModalButtonI);
+
+                        if (nb_marque > marqueImgLength)
+                        {
+                            break;
+                        }
+
+                        // console.log("je passe"+nb_marque+"fois dans la boucle");
+
+                        nb_marque = nb_marque+1;
+    
+                    }
+                })
+                .catch((error) => {
+                    console.log(error)
+                });
+            }
+            getMarqueModal();
+
+            async function getAPropos() {
+            let response = await axios
+                .get("http://admin.ham05.com:8055/items/A_Propos")
+                .then((response) => {
+                    var aProposTitre = document.getElementById("aProposTitre");
+                    aProposTitre.innerHTML = (response.data["data"]["Titre"]);
+                    var aProposSousTitre = document.getElementById("aProposSousTitre");
+                    aProposSousTitre.innerHTML = (response.data["data"]["Sous_titre"]);
+                    var aProposDescription = document.getElementById("aProposDescription");
+                    var aProposImg = document.getElementById("aProposImg");
+                    aProposImg.setAttribute("src", "http://admin.ham05.com:8055/assets/"+(response.data["data"]["Image"]));
+                })
+                .catch((error) => {
+                    console.log(error)
+                });
+            }
+            getAPropos();
+
+            async function getServices() {
+            let response = await axios
+                .get("http://admin.ham05.com:8055/items/Services")
+                .then((response) => {
+                    var servicesLength = (response.data["data"].length);
+                    console.log("nombre de services "+servicesLength);
+                    let nb_services = 0;
+
+                    var servicesContainerRow = document.createElement('div');
+                    servicesContainerRow.setAttribute("class", "row text-center");
+
+                    while (nb_services < servicesLength)
                     {
-                        break;
+                        var dataServices = (response.data["data"][nb_services]["Logo"]);
+
+                        // var servicesContainer = document.createElement('div');
+                        // servicesContainer.setAttribute("class", "container");
+                        document.getElementById("services").appendChild(servicesContainer);
+
+                        servicesContainer.appendChild(servicesContainerRow);
+                        document.getElementById("servicesContainer").appendChild(servicesContainerRow)
+
+                        var servicesContainerCol = document.createElement('div');
+                        servicesContainerCol.setAttribute("class", "col-md-4");
+                        servicesContainerRow.appendChild(servicesContainerCol);
+
+                        var servicesContainerSpan = document.createElement('span');
+                        servicesContainerSpan.setAttribute("class", "fa-stack fa-4x");
+                        servicesContainerCol.appendChild(servicesContainerSpan);
+
+                        var servicesContainerI = document.createElement('i');
+                        servicesContainerI.setAttribute("class", "fas fa-circle fa-stack-2x text-primary");
+                        var servicesContainerI2 = document.createElement('i');
+                        servicesContainerI2.setAttribute("class", "fas fa-shopping-cart fa-stack-1x fa-inverse");
+                        servicesContainerSpan.appendChild(servicesContainerI);
+                        servicesContainerSpan.appendChild(servicesContainerI2);
+
+                        var servicesContainerH4 = document.createElement('h4');
+                        servicesContainerH4.setAttribute("class", "my-3");
+                        servicesContainerH4.innerHTML = (response.data["data"][nb_services]["Titre"]);
+
+                        var servicesContainerP = document.createElement('p');
+                        servicesContainerP.setAttribute("class", "text-muted");
+                        servicesContainerP.innerHTML = (response.data["data"][nb_services]["Description"]);
+                        servicesContainerCol.appendChild(servicesContainerH4);
+                        servicesContainerCol.appendChild(servicesContainerP);
+
+                        if (nb_services > servicesLength)
+                        {
+                            break;
+                        }
+
+                        nb_services = nb_services+1;
                     }
-
-                    nb_marque = nb_marque+1;
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-            });
-        }
-        makeGetMarque();
-
-        async function getMarqueModal() {
-        let response = await axios
-            .get("http://admin.ham05.com:8055/items/Marques")
-            .then((response) => {
-                var marqueImgLength = (response.data["data"].length);
-                console.log(marqueImgLength);
-                let nb_marque = 0;
-                while (nb_marque < marqueImgLength)
-                {
-                    var dataMarque = (response.data["data"][nb_marque]["Photo"]);
-
-                    var marqueModalBloc = document.createElement('div');
-                    marqueModalBloc.setAttribute("class", "portfolio-modal modal fade");
-                    marqueModalBloc.setAttribute("id", "portfolioModal"+(nb_marque+1));
-                    marqueModalBloc.setAttribute("tabindex", "-1");
-                    marqueModalBloc.setAttribute("role", "dialog");
-                    marqueModalBloc.setAttribute("aria-hidden", "true");
-
-                    var pageTop = document.getElementById("page-top");
-                    pageTop.appendChild(marqueModalBloc);
-
-                    var marqueModalBlocDialog = document.createElement('div');
-                    marqueModalBlocDialog.setAttribute("class", "modal-dialog");
-                    marqueModalBloc.appendChild(marqueModalBlocDialog);
-                    // document.getElementById("portfolioModal1");
-
-                    var marqueModalBlocContent = document.createElement('div');
-                    marqueModalBlocContent.setAttribute("class", "modal-content");
-                    marqueModalBlocDialog.appendChild(marqueModalBlocContent);
-
-                    var marqueModalClose = document.createElement('div');
-                    marqueModalClose.setAttribute("class", "close-modal");
-                    marqueModalClose.setAttribute("data-bs-dismiss", "modal");
-                    marqueModalBlocContent.appendChild(marqueModalClose);
-
-                    // var marqueImgLength = (response.data["data"].length);
-                    // // nb_marque = 0;
-                    // while (nb_marque <= marqueImgLength)
-                    // {
-                    //     var dataMarque = (response.data["data"][nb_marque]["Photo"]);
-                        // if(nb_marque >= marqueImgLength)
-                        // {
-                        //     break;
-                        // }
-
-                        // nb_marque = nb_marque+1;
-                    // }
-
-                    // Image icone à récupérer de directus
-                    var marqueModalImg = document.createElement('img');
-                    marqueModalImg.setAttribute("src", "assets/img/close-icon.svg");
-                    marqueModalImg.setAttribute("alt", "Close modal");
-                    marqueModalImg.setAttribute("class", "d-block w-100");
-                    marqueModalClose.appendChild(marqueModalImg);
-
-                    var marqueModalContainer = document.createElement('div');
-                    marqueModalContainer.setAttribute("class", "container");
-                    marqueModalBlocContent.appendChild(marqueModalContainer);
-
-                    var marqueModalRow = document.createElement('div');
-                    marqueModalRow.setAttribute("class", "row justify-content-center");
-                    marqueModalContainer.appendChild(marqueModalRow);
-
-                    var marqueModalCol = document.createElement('div');
-                    marqueModalCol.setAttribute("class", "col-lg-8");
-                    marqueModalRow.appendChild(marqueModalCol);
-
-                    var marqueModalBody = document.createElement('div');
-                    marqueModalBody.setAttribute("class","modal-body");
-                    marqueModalCol.appendChild(marqueModalBody);
-
-                    var marqueModalText = document.createElement('h2');
-                    marqueModalText.setAttribute("class", "text-uppercase");
-                    marqueModalText.innerHTML = (response.data["data"][nb_marque]["Titre"]);
-
-                    var marqueModalItem = document.createElement('p');
-                    marqueModalItem.setAttribute("class", "item-intro text-muted");
-                    // marqueModalItem.innerHTML = ("test");
-
-                    var marqueModalImgFluid = document.createElement('img');
-                    marqueModalImgFluid.setAttribute("class", "img-fluid d-block mx-auto");
-                    marqueModalImgFluid.setAttribute("src", "http://admin.ham05.com:8055/assets/"+dataMarque);
-                    marqueModalImgFluid.setAttribute("alt","http://admin.ham05.com:8055/assets/"+dataMarque);
-
-                    var marqueModalItemP = document.createElement('p');
-                    marqueModalItemP.innerHTML = (response.data["data"][nb_marque]["Descriptif"]);
-
-                    // Texte et image dans la balise modal-body
-                    marqueModalBody.appendChild(marqueModalText);
-                    marqueModalBody.appendChild(marqueModalItem);
-                    marqueModalBody.appendChild(marqueModalImgFluid);
-                    marqueModalBody.appendChild(marqueModalItemP);
-
-                    var marqueModalList = document.createElement('ul');
-                    marqueModalList.setAttribute("class", "list-inline");
-                    var marqueModalListUl = document.createElement('li');
-                    var marqueModalListStrong = document.createElement('strong');
-
-                    var marqueModalButton = document.createElement('button');
-                    marqueModalButton.setAttribute("class", "btn btn-primary btn-xl text-uppercase");
-                    marqueModalButton.setAttribute("data-bs-dismiss", "modal");
-                    marqueModalButton.setAttribute("type", "button");
-                    marqueModalBody.appendChild(marqueModalButton);
-
-                    var marqueModalButtonI = document.createElement('i');
-                    marqueModalButtonI.setAttribute("class", "fas fa-xmark me-1");
-                    marqueModalButton.appendChild(marqueModalButtonI);
-
-                    if (nb_marque > marqueImgLength)
-                    {
-                        break;
-                    }
-
-                    // console.log("je passe"+nb_marque+"fois dans la boucle");
-
-                    nb_marque = nb_marque+1;
-   
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-            });
-        }
-        getMarqueModal();
-
-        async function getAPropos() {
-        let response = await axios
-            .get("http://admin.ham05.com:8055/items/A_Propos")
-            .then((response) => {
-                var aProposTitre = document.getElementById("aProposTitre");
-                aProposTitre.innerHTML = (response.data["data"]["Titre"]);
-                var aProposSousTitre = document.getElementById("aProposSousTitre");
-                aProposSousTitre.innerHTML = (response.data["data"]["Sous_titre"]);
-                var aProposDescription = document.getElementById("aProposDescription");
-                var aProposImg = document.getElementById("aProposImg");
-                aProposImg.setAttribute("src", "http://admin.ham05.com:8055/assets/"+(response.data["data"]["Image"]));
-            })
-            .catch((error) => {
-                console.log(error)
-            });
-        }
-        getAPropos();
-
-        async function getServices() {
-        let response = await axios
-            .get("http://admin.ham05.com:8055/items/Services")
-            .then((response) => {
-                var servicesLength = (response.data["data"].length);
-                console.log("nombre de services "+servicesLength);
-                let nb_services = 0;
-
-                var servicesContainerRow = document.createElement('div');
-                servicesContainerRow.setAttribute("class", "row text-center");
-
-                while (nb_services < servicesLength)
-                {
-                    var dataServices = (response.data["data"][nb_services]["Logo"]);
-
-                    // var servicesContainer = document.createElement('div');
-                    // servicesContainer.setAttribute("class", "container");
-                    document.getElementById("services").appendChild(servicesContainer);
-
-                    servicesContainer.appendChild(servicesContainerRow);
-                    document.getElementById("servicesContainer").appendChild(servicesContainerRow)
-
-                    var servicesContainerCol = document.createElement('div');
-                    servicesContainerCol.setAttribute("class", "col-md-4");
-                    servicesContainerRow.appendChild(servicesContainerCol);
-
-                    var servicesContainerSpan = document.createElement('span');
-                    servicesContainerSpan.setAttribute("class", "fa-stack fa-4x");
-                    servicesContainerCol.appendChild(servicesContainerSpan);
-
-                    var servicesContainerI = document.createElement('i');
-                    servicesContainerI.setAttribute("class", "fas fa-circle fa-stack-2x text-primary");
-                    var servicesContainerI2 = document.createElement('i');
-                    servicesContainerI2.setAttribute("class", "fas fa-shopping-cart fa-stack-1x fa-inverse");
-                    servicesContainerSpan.appendChild(servicesContainerI);
-                    servicesContainerSpan.appendChild(servicesContainerI2);
-
-                    var servicesContainerH4 = document.createElement('h4');
-                    servicesContainerH4.setAttribute("class", "my-3");
-                    servicesContainerH4.innerHTML = (response.data["data"][nb_services]["Titre"]);
-
-                    var servicesContainerP = document.createElement('p');
-                    servicesContainerP.setAttribute("class", "text-muted");
-                    servicesContainerP.innerHTML = (response.data["data"][nb_services]["Description"]);
-                    servicesContainerCol.appendChild(servicesContainerH4);
-                    servicesContainerCol.appendChild(servicesContainerP);
-
-                    if (nb_services > servicesLength)
-                    {
-                        break;
-                    }
-
-                    nb_services = nb_services+1;
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-            });
-        }
-        getServices();
-
-        async function postMessage() {
-        let response = await axios
-            .get("http://admin.ham05.com:8055/items/Contact")
-            .then((response) => {
-                
-            })
-            .catch((error) => {
-                console.log(error)
-            });
-        }
-        postMessage();
+                })
+                .catch((error) => {
+                    console.log(error)
+                });
+            }
+            getServices();
+        })
+               
     </script>
 
     <body id="page-top">
@@ -475,9 +455,13 @@
         </nav>
 
         <!-- Masthead-->
-        <header class="masthead">            
-            <div id="carouselExampleIndicators" class="carousel slide w-100 h-50" data-bs-ride="carousel">
-                
+        <header class="masthead">
+            <div id="carouselExampleIndicatorsBg" class="carousel slide" data-bs-ride="carousel">
+                <div id="slideBg"></div>
+            </div>
+            <div id="carouselExampleIndicators" class="carousel slide w-75 h-50 d-block mx-auto" data-bs-ride="carousel">
+                <div id="carousel-indicators" class="carousel-indicators">
+                </div>
                 <div id="slider" class="carousel-inner">
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
@@ -704,31 +688,31 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <!-- Name input-->
-                                <input class="form-control" id="name" type="text" placeholder="Your Name *" data-sb-validations="required" />
-                                <div class="invalid-feedback" data-sb-feedback="name:required">Un nom est requis</div>
+                                <input class="form-control" id="name" type="text" placeholder="Votre Nom *" data-sb-validations="required" />
+                                <div class="invalid-feedback" data-sb-feedback="name:required">Un nom est requis.</div>
                             </div>
                             <div class="form-group">
                                 <!-- Adresse -->
                                 <input class="form-control" id="adresse" type="address" placeholder="Votre Adresse *" data-sb-validations="required"/>
-                                <div class="invalid-feedback" data-sb-feedback="adresse:required">Une adresse est requise</div>
+                                <div class="invalid-feedback" data-sb-feedback="adresse:required">Une adresse est requise.</div>
                             </div>
                             <div class="form-group">
                                 <!-- Email address input-->
-                                <input class="form-control" id="email" type="email" placeholder="Your Email *" data-sb-validations="required,email" />
-                                <div class="invalid-feedback" data-sb-feedback="email:required">UN Email est requis</div>
-                                <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+                                <input class="form-control" id="email" type="email" placeholder="Votre Email *" data-sb-validations="required,email" />
+                                <div class="invalid-feedback" data-sb-feedback="email:required">Un Email est requis.</div>
+                                <div class="invalid-feedback" data-sb-feedback="email:email">L'Email entré n'est pas valide.</div>
                             </div>
                             <div class="form-group mb-md-0">
                                 <!-- Phone number input-->
-                                <input class="form-control" id="phone" type="tel" placeholder="Your Phone *" data-sb-validations="required" />
-                                <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
+                                <input class="form-control" id="phone" type="tel" placeholder="Votre téléphone *" data-sb-validations="required" />
+                                <div class="invalid-feedback" data-sb-feedback="phone:required">Un numéro de téléphone est requis.</div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group form-group-textarea mb-md-0">
                                 <!-- Message input-->
-                                <textarea class="form-control" id="message" placeholder="Your Message *" data-sb-validations="required"></textarea>
-                                <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
+                                <textarea class="form-control" id="message" placeholder="Votre message *" data-sb-validations="required"></textarea>
+                                <div class="invalid-feedback" data-sb-feedback="message:required">Un message est requis.</div>
                             </div>
                         </div>
                     </div>
@@ -739,18 +723,20 @@
                     <div class="d-none" id="submitSuccessMessage">
                         <div class="text-center text-white mb-3">
                             <div class="fw-bolder">Message envoyé correctement!</div>
-                            To activate this form, sign up at
-                            <br />
-                            <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
+                            <br/>
+                            <!-- <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
+                            <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a> -->
+                            <div class="text-center"><button class="btn btn-primary btn-xl text-uppercase enable" onclick="postFormulaire()">Renvoyer un message</button></div>
                         </div>
                     </div>
+
                     <!-- Submit error message-->
                     <!---->
                     <!-- This is what your users will see when there is-->
                     <!-- an error submitting the form-->
                     <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
                     <!-- Submit Button-->
-                    <div class="text-center"><button class="btn btn-primary btn-xl text-uppercase disabled" id="submitButton" type="submit">Send Message</button></div>
+                    <div class="text-center"><button class="btn btn-primary btn-xl text-uppercase disabled" id="submitButton" onclick="postFormulaire()">Envoyer un Message</button></div>
                 </form>
             </div>
         </section>
@@ -781,7 +767,40 @@
         <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script src="./js/axios.js"></script>
+        <script>
+            function postFormulaire() {
+
+                var contactNom = document.getElementById("name").value;
+                var contactAdresse = document.getElementById("adresse").value;
+                var contactEmail = document.getElementById("email").value;
+                var contactPhone = document.getElementById("phone").value;
+                var contactMessage = document.getElementById("message").value;
+
+                let contactForm = {};
+                contactForm["Nom"]=contactNom;
+                contactForm["Adresse"]=contactAdresse;
+                contactForm["Email"]=contactEmail;
+                contactForm["Telephone"]=contactPhone;
+                contactForm["Message"]=contactMessage;
+
+                var contactFormJson = JSON.stringify(contactForm);
+
+                console.log(contactFormJson);
+
+                const options = {
+                    method: 'POST',
+                    url: 'http://admin.ham05.com:8055/items/Contact',
+                    headers: {'Content-Type': 'application/json'},
+                    data: contactFormJson
+                };
+
+                axios.request(options).then(function (response) {
+                    console.log(response.data);
+                }).catch(function (error) {
+                     console.error('--->');
+                     console.error(error);
+                });
+            }
+        </script>
     </body>
 </html>

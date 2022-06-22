@@ -379,12 +379,12 @@ button,
 [type=submit] {
   -webkit-appearance: button;
 }
-button:not(:disabled),
+/* button:not(:disabled),
 [type=button]:not(:disabled),
 [type=reset]:not(:disabled),
 [type=submit]:not(:disabled) {
   cursor: pointer;
-}
+} */
 
 ::-moz-focus-inner {
   padding: 0;
@@ -5994,16 +5994,7 @@ textarea.form-control-lg {
   touch-action: pan-y;
 }
 
-.carousel-inner {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-}
-.carousel-inner::after {
-  display: block;
-  clear: both;
-  content: "";
-}
+
 
 .carousel-item {
   position: relative;
@@ -6068,7 +6059,7 @@ textarea.form-control-lg {
   position: absolute;
   top: 0;
   bottom: 0;
-  z-index: 1;
+  z-index: 20;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -11900,12 +11891,47 @@ section#contact form#contactForm :-ms-input-placeholder {
    height: 844px;
 }
 
+
 .carousel-control-prev{
-  /* background: #0c4128 !important; */
-  background: transparent;
+   /* z-index: -10;  */
+   background: transparent; 
 }
 
-.carousel-control-next{
-  /* background: #0c4128 !important; */
-  background: transparent;
+.carousel-control-next{ 
+   background: transparent; 
+}
+
+#slideBg {
+  width: 1920px;
+  height: 844px;
+  -webkit-filter: blur(3px);
+  filter: blur(3px);
+  z-index: -1;
+}
+
+#slider {
+  margin-top: -844px;
+  z-index: 10;
+}
+
+.carousel-inner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  /* -webkit-filter: none !important;
+  filter: none !important;*/
+  cursor: pointer;
+
+}
+.carousel-inner::after {
+  display: block;
+  clear: both;
+  content: "";
+}
+
+#testing > .carousel-inner {
+  -webkit-filter: none;
+  filter: unset;
+  -webkit-filter: unset;
+
 }
