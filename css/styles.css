@@ -3023,10 +3023,10 @@ textarea.form-control-lg {
   outline: 0;
   box-shadow: 0 0 0 0.25rem rgba(255, 200, 0, 0.25);
 }
-.btn:disabled, .btn.disabled, fieldset:disabled .btn {
+/* .btn:disabled, .btn.disabled, fieldset:disabled .btn {
   pointer-events: none;
   opacity: 0.65;
-}
+} */
 
 .btn-primary {
   color: #fff;

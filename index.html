@@ -25,7 +25,7 @@
             let response = await axios
                 .get("http://admin.ham05.com:8055/items/homepage")
                 .then((response) => {
-                    console.log(response.data);
+                    // console.log(response.data);
                     // AJout du texte
                     //  let html = innerHTML(response.data["data"]["Titre"]);
                     // divSlide.innerHTML = innerHTML(response.data["data"]["Titre"]);
@@ -33,12 +33,12 @@
 
                     //Logo
                     var dataLogo = (response.data["data"]["Logo"]);
-                    console.log("donnée image logo: "+dataLogo);
+                    // console.log("donnée image logo: "+dataLogo);
                     document.getElementById("navbar-logo").setAttribute("src", "http://admin.ham05.com:8055/assets/"+dataLogo);
                     document.getElementById("navbar-logo").setAttribute("alt", "http://admin.ham05.com:8055/assets/"+dataLogo);
 
                     var datamapImg = (response.data["data"]["Map"]);
-                    console.log("mapimg"+datamapImg);
+                    // console.log("mapimg"+datamapImg);
                     // document.getElementById("mapImg").setAttribute("src", "http://admin.ham05.com:8055/assets/"+datamapImg);
                     document.getElementById("contact").setAttribute("style", "background-image: url(http://admin.ham05.com:8055/assets/"+datamapImg);
 
@@ -62,7 +62,7 @@
                 .get("http://admin.ham05.com:8055/items/homepage_files")
                 .then((response) => {
                     var slideImgLength = (response.data["data"]).length;
-                    console.log("nombre d'image dans le slide: "+slideImgLength);
+                    // console.log("nombre d'image dans le slide: "+slideImgLength);
                    
                     var nb_slide = 0;
 
@@ -71,7 +71,7 @@
                         // Données JSON de chaque image
                         var dataImg = (response.data["data"][nb_slide]["directus_files_id"]);
 
-                        console.log(dataImg);
+                        // console.log(dataImg);
 
                         // Création des Sliders
                         var divSlide = document.createElement('div');
@@ -89,11 +89,15 @@
                         
                         // Création des deux sliders
                         divSlide.setAttribute("id", "slide"+nb_slide);
-                        divSlide.setAttribute("data-interval" ,"10");
-                        divSlideBg.setAttribute("id", "slide"+nb_slide);
+                        divSlide.setAttribute("data-pause", "false");
+                        // divSlide.setAttribute("data-bs-slide", "prev");
 
-                        console.log("nombre de slide: "+nb_slide);
-                        console.log("nombre de slide bg: "+nb_slide);                  
+                        divSlideBg.setAttribute("id", "slide"+nb_slide);
+                        divSlideBg.setAttribute("data-pause", "false");
+                        // divSlideBg.setAttribute("data-bs-slide", "next");
+                        
+                        // console.log("nombre de slide: "+nb_slide);
+                        // console.log("nombre de slide bg: "+nb_slide);                  
 
                         // Création des images du slider
                         var imgSlide = document.createElement('img');
@@ -104,7 +108,6 @@
                         imgSlide.setAttribute("style","background: transparent");
                         divSlide.appendChild(imgSlide);
 
-                        
                         // Création des images du slider background
                         var imgSlideBg = document.createElement('img');
                         imgSlideBg.setAttribute("id","sliderbg");
@@ -112,7 +115,6 @@
                         imgSlideBg.setAttribute("class","img-fluid d-block mx-auto px-auto");
                         imgSlideBg.setAttribute("height","844px");
                         imgSlideBg.setAttribute("width", "100%");
-                        imgSlideBg.setAttribute("data-bs-slide", "prev");
 
                         // document.getElementById("slideBg").appendChild(imgSlideBg);
                         divSlideBg.appendChild(imgSlideBg);
@@ -128,13 +130,13 @@
                         if(nb_slide==0){
                             butSlide.setAttribute("class", "active");
                         }else{
-                            console.log("le slide est à"+nb_slide);
+                            // console.log("le slide est à"+nb_slide);
                         }
                         butSlideIndicators.appendChild(butSlide);
 
                         // Ajout des sliders au div parent
                         var slider = document.getElementById("slider");
-                        slider.setAttribute("filter", "inherit")
+                        slider.setAttribute("filter", "inherit");
                         slider.appendChild(divSlide);
                         document.getElementById("slideBg").appendChild(divSlideBg);
 
@@ -165,7 +167,7 @@
                     while (nb_marque < marqueImgLength)
                     {
                         var dataMarque = (response.data["data"][nb_marque]["Photo"]);
-                        console.log(response.data["data"][nb_marque]["Photo"]);
+                        // console.log(response.data["data"][nb_marque]["Photo"]);
 
                         //Bloc parent pour les marques
                         var row = document.getElementById("row");
@@ -243,7 +245,7 @@
                 .get("http://admin.ham05.com:8055/items/Marques")
                 .then((response) => {
                     var marqueImgLength = (response.data["data"].length);
-                    console.log(marqueImgLength);
+                    // console.log(marqueImgLength);
                     let nb_marque = 0;
                     while (nb_marque < marqueImgLength)
                     {
@@ -373,7 +375,7 @@
                 .get("http://admin.ham05.com:8055/items/Services")
                 .then((response) => {
                     var servicesLength = (response.data["data"].length);
-                    console.log("nombre de services "+servicesLength);
+                    // console.log("nombre de services "+servicesLength);
                     let nb_services = 0;
 
                     var servicesContainerRow = document.createElement('div');
@@ -456,11 +458,11 @@
 
         <!-- Masthead-->
         <header class="masthead">
-            <div id="carouselExampleIndicatorsBg" class="carousel slide" data-bs-ride="carousel">
+            <div id="carouselExampleIndicatorsBg" class="carousel slide" data-bs-interval="5000" data-bs-pause="false" data-bs-ride="carousel">
                 <div id="slideBg"></div>
             </div>
-            <div id="carouselExampleIndicators" class="carousel slide w-75 h-50 d-block mx-auto" data-bs-ride="carousel">
-                <div id="carousel-indicators" class="carousel-indicators">
+            <div id="carouselExampleIndicators" class="carousel slide w-75 h-50 d-block mx-auto" data-bs-interval="5000" data-bs-pause="false" data-bs-ride="carousel" data-bs-slidenext="next">
+                <div id="carousel-indicators" class="carousel-indicators" >
                 </div>
                 <div id="slider" class="carousel-inner">
                 </div>
@@ -688,7 +690,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <!-- Name input-->
-                                <input class="form-control" id="name" type="text" placeholder="Votre Nom *" data-sb-validations="required" />
+                                <input class="form-control" id="name" type="text" placeholder="Votre Nom *" data-sb-validations="required"/>
                                 <div class="invalid-feedback" data-sb-feedback="name:required">Un nom est requis.</div>
                             </div>
                             <div class="form-group">
@@ -704,7 +706,7 @@
                             </div>
                             <div class="form-group mb-md-0">
                                 <!-- Phone number input-->
-                                <input class="form-control" id="phone" type="tel" placeholder="Votre téléphone *" data-sb-validations="required" />
+                                <input class="form-control" id="phone" type="number" placeholder="Votre téléphone *" data-sb-validations="required" />
                                 <div class="invalid-feedback" data-sb-feedback="phone:required">Un numéro de téléphone est requis.</div>
                             </div>
                         </div>
@@ -723,10 +725,11 @@
                     <div class="d-none" id="submitSuccessMessage">
                         <div class="text-center text-white mb-3">
                             <div class="fw-bolder">Message envoyé correctement!</div>
+                            <div class="error-message d-none"></div>
                             <br/>
                             <!-- <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
                             <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a> -->
-                            <div class="text-center"><button class="btn btn-primary btn-xl text-uppercase enable" onclick="postFormulaire()">Renvoyer un message</button></div>
+                            <div class="text-center"><button id="butResendForm" class="btn btn-primary btn-xl text-uppercase enable" onclick="postFormulaire()">Renvoyer un message</button></div>
                         </div>
                     </div>
 
@@ -736,7 +739,7 @@
                     <!-- an error submitting the form-->
                     <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
                     <!-- Submit Button-->
-                    <div class="text-center"><button class="btn btn-primary btn-xl text-uppercase disabled" id="submitButton" onclick="postFormulaire()">Envoyer un Message</button></div>
+                    <div class="text-center"><button class="btn btn-primary btn-xl text-uppercase enable" id="submitButton" onclick="postFormulaire()">Envoyer un Message</button></div>
                 </form>
             </div>
         </section>
@@ -777,6 +780,21 @@
                 var contactMessage = document.getElementById("message").value;
 
                 let contactForm = {};
+                if(contactNom=='' || contactAdresse=='' || contactEmail=='' || contactPhone=='' || contactMessage==''){
+                    console.log('passe par la ');
+                    document.querySelector(".fw-bolder").innerHTML = "Un des champs est vide";
+                    // document.querySelector(".fw-bolder").setAttribute("class", "alert alert-danger");
+                    // document.querySelector(".error-message").innerHTML = 'Un des champs est vide';
+                    // document.getElementsByClassName("fw-bolder").setAttribute("alert alert-danger");
+                    // .setAttribute("alert alert-danger");
+
+                    console.log(document.querySelector(".error-message"));
+
+                    return false;
+                } else {
+                    document.querySelector(".fw-bolder").innerHTML = "Message envoyé correctement !";
+
+                }
                 contactForm["Nom"]=contactNom;
                 contactForm["Adresse"]=contactAdresse;
                 contactForm["Email"]=contactEmail;
@@ -795,12 +813,90 @@
                 };
 
                 axios.request(options).then(function (response) {
-                    console.log(response.data);
+                    console.log(response.status);
+                    if(response.status===200){
+                        document.getElementById("name").value = "";
+                        document.getElementById("adresse").value = "";
+                        document.getElementById("email").value = "";
+                        document.getElementById("phone").value = "";
+                        document.getElementById("message").value = "";
+                        console.log("-------->")
+                        
+                        document.getElementById("name").removeAttribute("disabled")
+                        document.getElementById("adresse").removeAttribute("disabled");
+                        document.getElementById("email").removeAttribute("disabled");
+                        document.getElementById("phone").removeAttribute("disabled");
+                        document.getElementById("message").removeAttribute("disabled");
+
+                        document.getElementById("butResendForm").setAttribute("class", "btn btn-primary btn-xl text-uppercase enable");
+                    }
+                    // location.reload()
+
                 }).catch(function (error) {
-                     console.error('--->');
-                     console.error(error);
+                    console.error(error);
                 });
+
+                /*
+                document.forms[0].addEventListener("submit", function(evenement) {
+                    
+                })
+                */
+                // if (contactNom, contactAdresse, contactEmail, contactPhone, contactMessage == "")
+                // {
+                //     document.getElementById("butResendForm").setAttribute("class", "disable");
+                //     console.log("champs formulaire vide");
+                // }
             }
+
+            // Reafficher formulaire après premier envoie, avec message succès et renitialiser formulaire
+            function renvoiForm()
+            {
+                console.log("je passe dans la fonction renvoiForm pour remettre à zero les champs")
+
+
+                // postFormulaire();
+
+
+                // Ajouter type submit bouton renvoyer
+                // verifier si il est envoyer
+                // envoyer formulaire
+
+                var contactNom = document.getElementById("name").value;
+                var contactAdresse = document.getElementById("adresse").value;
+                var contactEmail = document.getElementById("email").value;
+                var contactPhone = document.getElementById("phone").value;
+                var contactMessage = document.getElementById("message").value;
+
+                // contactNom,contactAdresse, contactEmail, contactPhone, contactMessage = "";
+
+                // if( contactNom, contactAdresse, contactEmail, contactPhone, contactMessage == "")
+                // {
+                // }
+
+                document.forms[0].addEventListener("submit", function(evenement) {
+                    if (contactNom, contactAdresse, contactEmail, contactPhone, contactMessage != "")
+                    {
+                        console.log("les champs ne sont pas vides"+contactNom+contactAdresse+contactEmail+contactPhone+contactMessage);
+                        contactNom,contactAdresse, contactEmail, contactPhone, contactMessage = "";
+
+                    } else if (contactNom,contactAdresse,contactEmail, contactPhone, contactMessage == "") {
+
+                        // document.getElementById("butResendForm").setAttribute("onclick", "postFormulaire()");
+                        // document.getElementById("butResendForm").setAttribute("class", "btn btn-primary btn-xl text-uppercase enable");
+                        console.log("les champs sont vides");
+                        // document.getElementById("butResendForm").setAttribute("class", "btn btn-primary btn-xl text-uppercase enable");
+                    }
+                })
+
+                // if (contactNom,contactAdresse,contactEmail,contactPhone, contactMessage != "")
+                // {
+                //     document.forms[0].addEventListener("submit", function(evenement) {
+                //         postFormulaire();
+                //     })
+                // }
+                postFormulaire();
+            }
+            // renvoiForm();
         </script>
     </body>
 </html>
